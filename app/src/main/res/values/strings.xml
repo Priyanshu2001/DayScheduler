@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Day Scheduler</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="minutes_length">%d minutes</string>
+    <string name="hours_length">%d hours</string>
+    <string name="seconds_length">%d seconds</string>
+</resources>

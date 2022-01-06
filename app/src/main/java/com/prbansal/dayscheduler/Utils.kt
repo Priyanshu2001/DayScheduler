@@ -43,3 +43,11 @@ fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Re
 
     return simple.format(start) + " - " + simple.format(end) +", (" + calculateDurStr() + ")"
 }
+
+
+fun getAlarmStateByType(type : Int) : Int {
+    if(type == 1 || type== 4 || type == 6 || type== 7)
+        return 0
+    else
+        return -1
+}

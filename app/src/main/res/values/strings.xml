@@ -5,4 +5,6 @@
     <string name="minutes_length">%d minutes</string>
     <string name="hours_length">%d hours</string>
     <string name="seconds_length">%d seconds</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

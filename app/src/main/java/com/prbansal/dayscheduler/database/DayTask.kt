@@ -19,5 +19,8 @@ data class DayTask (
     var alarmState: Int? = -1,
 
     @ColumnInfo(name = "title")
-    val title: String
+    val title: String,
+
+    @ColumnInfo(name = "type")
+    val type: Int,
 )

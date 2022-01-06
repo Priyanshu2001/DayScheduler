@@ -47,14 +47,27 @@ class TaskAdapter(val taskAlarmListener : SetTaskAlarmListener) : ListAdapter<Da
         fun bind(clickListner : SetTaskAlarmListener,item : DayTask){
             binding.dayTask = item
             binding.clickListener = clickListner
+
             when(item.alarmState){
                 -1 -> binding.alarmBtn.visibility = View.GONE
-                 0 ->binding.alarmBtn.visibility = View.VISIBLE
+                 0 ->{binding.alarmBtn.visibility = View.VISIBLE
+                binding.alarmBtn.isChecked = false}
                 1 -> {
                     binding.alarmBtn.visibility = View.VISIBLE
                     binding.alarmBtn.isChecked = true
                 }
 
+            }
+
+            when(item.type){
+                1 -> binding.taskImg.setImageResource(R.drawable.ic_task_sleep)
+                2 -> binding.taskImg.setImageResource(R.drawable.ic_task_refreshment)
+                3 -> binding.taskImg.setImageResource(R.drawable.ic_task_study)
+                4 -> binding.taskImg.setImageResource(R.drawable.ic_task_hobby)
+                5 -> binding.taskImg.setImageResource(R.drawable.ic_task_eat)
+                6 -> binding.taskImg.setImageResource(R.drawable.ic_task_entertrainment)
+                7 -> binding.taskImg.setImageResource(R.drawable.ic_task_excercise)
+                else -> binding.taskImg.setImageResource(R.drawable.ic_baseline_home_24)
             }
             binding.executePendingBindings()
         }
@@ -105,7 +118,7 @@ class TaskAdapter(val taskAlarmListener : SetTaskAlarmListener) : ListAdapter<Da
         return when (getItem(position)) {
             is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
             is DataItem.TaskItem -> ITEM_VIEW_TYPE_ITEM
-            is DataItem.NoTask -> ITEM_VIEW_TYPE_NO_TASK
+            else ->  ITEM_VIEW_TYPE_NO_TASK
         }
     }
 
@@ -130,11 +143,11 @@ sealed class DataItem {
     }
 
     object Header: DataItem() {
-        override var id = Int.MIN_VALUE
+        override val id = Int.MIN_VALUE
     }
 
     object NoTask: DataItem() {
-        override var id = -1
+        override val id = -1
     }
 
     abstract val id :Int?

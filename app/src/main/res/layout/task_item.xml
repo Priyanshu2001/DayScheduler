@@ -11,6 +11,9 @@
         <variable
             name="clickListener"
             type="com.prbansal.dayscheduler.home.TaskAdapter.SetTaskAlarmListener" />
+        <variable
+            name="utils"
+            type="com.prbansal.dayscheduler.UtilsKt" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -43,7 +46,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="@{dayTask.title}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/secondary"
+                android:textColor="@color/primaryVariant2"
                 app:layout_constraintEnd_toStartOf="@+id/alarm_btn"
                 app:layout_constraintStart_toEndOf="@+id/taskImg"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -67,7 +70,7 @@
                 android:drawableLeft="@drawable/ic_baseline_add_alarm_24"
                 android:drawablePadding="4dp"
                 android:minHeight="48dp"
-                android:onCheckedChanged="@{() -> clickListener.onClick(dayTask)}"
+                android:onClick="@{() -> clickListener.onClick(dayTask)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

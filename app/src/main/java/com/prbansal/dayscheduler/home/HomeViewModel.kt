@@ -1,10 +1,7 @@
 package com.prbansal.dayscheduler.home
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.prbansal.dayscheduler.database.DayDatabaseDao
 import com.prbansal.dayscheduler.database.DayTask
 import kotlinx.coroutines.*
@@ -20,24 +17,15 @@ class HomeViewModel(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
+    private val _navigateToTaskAdder = MutableLiveData<Boolean?>()
+    val navigateToTaskAdder: LiveData<Boolean?>
+        get() = _navigateToTaskAdder
 
 
-    /**
-     *  Handling the case of the stopped app or forgotten recording,
-     *  the start and end times will be the same.j
-     *
-     *  If the start time and end time are not the same, then we do not have an unfinished
-     *  recording.
-     */
-   /* private suspend fun getTotaskFromDatabase(): DayTask? {
-        //return withContext(Dispatchers.IO) {
-        var task = database.getTodayTask()
-        if (task?.endTimeMilli != task?.startTimeMilli) {
-            task = null
-        }
-        return task
-        //}
-    }*/
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 
 
 
@@ -54,25 +42,26 @@ class HomeViewModel(
     }
 
     fun onAddClicked() {
+        _navigateToTaskAdder.value = true
+    }
+    fun onSaveTaskClicked(newTask : DayTask){
         uiScope.launch {
-            // Create a new night, which captures the current time,
-            // and insert it into the database.
-            val newTask = DayTask(null, System.currentTimeMillis() + 10000, System.currentTimeMillis() + 10000000, 0, "Hello")
-
             insert(newTask)
         }
     }
 
+    fun doneNavigating() {
+        _navigateToTaskAdder.value = null
+    }
+
     fun onAlarmChecked(dayTask: DayTask) {
-        viewModelScope.launch {
-            // Create a new night, which captures the current time,
-            // and insert it into the database.
 
-            when(dayTask.alarmState) {
-                0-> dayTask.alarmState = 1
-                else -> dayTask.alarmState = 0
-            }
-
+        when(dayTask.alarmState) {
+            0-> dayTask.alarmState = 1
+            else -> dayTask.alarmState = 0
+        }
+        
+        uiScope.launch {
            update(dayTask)
         }
     }
